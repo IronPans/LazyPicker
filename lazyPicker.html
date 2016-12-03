@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>移动时间选择器</title>
+		<link rel="stylesheet" href="lazyPicker.min.css" />
+		<style>
+			html {
+				font-size: 20px;
+			}
+			
+			body {
+				font: 15px/1.3 arial,verdana,Microsoft YaHei,Tahoma,Simsun,sans-serif;
+				background: #eee;
+				overflow:hidden;
+			}
+			
+			input {
+				width: 250px;
+				height: 35px;
+				border: 1px solid #999;
+				margin: 10px 0;
+				padding: 0 10px;
+				border-radius: 5px;
+			}
+			
+			header {
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 44px;
+				line-height: 44px;
+				background: #333;
+				color: #fff;
+				text-align: center;
+				font-size: .9rem;
+			}
+			.content {
+				position: absolute;
+				top:44px;
+				left:0;
+				width:100%;
+				bottom:0;
+				overflow-y:auto;
+			}
+			
+			.panel {
+				margin: 10px;
+				border-radius:5px;
+				box-shadow:0 0 3px 3px rgba(0,0,0,.1);
+			}
+			.panel-content{
+				background: #fff;
+			}
+			.panel-header,
+			.panel-body{
+				padding:10px;
+			}
+			.panel-header{
+				border-bottom:1px solid #d9d9d9;
+				color:#666;
+			}
+			.green{
+				color:#009F95;
+			}
+			.blue{
+				color:#34AADC;
+			}
+			.black{
+				color:#333;
+			}
+			.ygreen{
+				color: #78BA32;
+			}
+			.orange{
+				color: #eea236;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header>
+			时间选择器
+		</header>
+		<div class="content">
+			<div class="panel">
+				<div class="panel-content">
+					<div class="panel-header">
+						实例（<span class="green">green 默认为墨绿</span>）
+					</div>
+					<div class="panel-body">
+						<input type="text" class="date-picker" placeholder="选择日期" />
+					</div>
+				</div>
+			</div>
+			<div class="panel">
+				<div class="panel-content">
+					<div class="panel-header">
+						实例（<span class="blue">blue 蓝色</span>）
+					</div>
+					<div class="panel-body">
+						<input type="text" class="date-picker2" placeholder="选择日期" />
+					</div>
+				</div>
+			</div>
+			<div class="panel">
+				<div class="panel-content">
+					<div class="panel-header">
+						实例（<span class="black">black 黑色</span>）
+					</div>
+					<div class="panel-body">
+						<input type="text" class="date-picker3" placeholder="选择日期" />
+					</div>
+				</div>
+			</div>
+			<div class="panel">
+				<div class="panel-content">
+					<div class="panel-header">
+						实例（<span class="ygreen">ygreen 黄绿</span>）
+					</div>
+					<div class="panel-body">
+						<input type="text" class="date-picker4" placeholder="选择日期" />
+					</div>
+				</div>
+			</div>
+			<div class="panel">
+				<div class="panel-content">
+					<div class="panel-header">
+						实例（<span class="orange">orange 橙色</span>）
+					</div>
+					<div class="panel-body">
+						<input type="text" class="date-picker5" placeholder="选择日期" />
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="lazyPicker.min.js"></script>
+		<script>
+			var picker = new LazyPicker('.date-picker');
+			var picker2 = new LazyPicker('.date-picker2',{
+				theme: 'blue',
+				onChange: function(data){
+					console.log(data);
+				}
+			});
+			var picker3 = new LazyPicker('.date-picker3', {
+				theme: 'black'
+			});
+			var picker4 = new LazyPicker('.date-picker4', {
+				theme: 'ygreen',
+				initDate: '2017-10-11',
+				maxDate: 2015
+			});
+			var picker5 = new LazyPicker('.date-picker5', {
+				theme: 'orange',
+				maxDate: 2050
+			});
+		</script>
+	</body>
+
+</html>
