@@ -3,7 +3,7 @@
  @Name : lazyPicker v1.1 移动日期控件
  @Author: TG
  @Date: 2016-12-03
- @Site：http://sentsin.com/layui/laydate
+ @Site：https://github.com/IronPans/LazyPicker/blob/master/lazyPicker.js
  
  */
 (function() {
