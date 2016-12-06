@@ -25,6 +25,7 @@
 			itemHeight: 40,
 			minDate: 1950
 		};
+		p.defaultMove = [];
 		params = params || {};
 		var originalParams = {};
 		for(var param in params) {
@@ -63,8 +64,10 @@
 		p.originalParams = originalParams;
 		p.currentDateInput = null;
 		p.initValue = [];
+		p.defaultValue = [];
 		p.selectValue = [];
 		p.currentSelected = [];
+		p.defaultSelected = [];
 		if(!p.params.data) {
 			(function setInitDate(p) {
 				var curDate = new Date();
@@ -117,6 +120,11 @@
 			setTimeout(function() {
 				document.body.removeChild(p.overlap);
 				p.container && document.body.removeChild(p.container);
+				for(var i = 0; i < moveY.length; i++) {
+					moveY[i] = p.defaultMove[i];
+					p.initValue[i] = p.defaultValue[i];
+					p.params.data ? p.currentSelected[i] = p.defaultSelected[i] : '';
+				};
 			}, 260);
 		};
 		p.drawDate = function() {
@@ -159,20 +167,29 @@
 				var data = p.params.data.item;
 				var child = data[p.currentSelected[0]];
 				for(var i = 0; i < p.currentSelected.length; i++) {
-					p.initValue[i] = child ? (child.name ? [child.name,child.id] : '') : '';
+					p.initValue[i] = child ? (child.name ? [child.name, child.id] : '') : '';
 					child = child ? (child.child ? child.child[p.currentSelected[i + 1]] : '') : '';
 				};
 				selector = p.initValue;
-				p.currentDateInput.value = selector.map(function(v){
+				p.currentDateInput.value = selector.map(function(v) {
 					return v[0];
 				}).join('-');
 				p.initValue[p.initValue.length] = p.currentDateInput.value;
-			}else{
+			} else {
 				p.currentDateInput.value = selector;
 				p.initValue[p.initValue.length - 1] = p.currentDateInput.value;
 			};
+			for(var i = 0; i < moveY.length; i++) {
+				p.defaultMove[i] = moveY[i];
+				p.defaultValue[i] = p.initValue[i];
+				p.params.data ? p.defaultSelected[i] = p.currentSelected[i] : '';
+			};
 			p.params.onChange && p.params.onChange.call(p, p.initValue);
-			p.closeModal();
+			document.body.classList.remove('modal-open');
+			setTimeout(function() {
+				document.body.removeChild(p.overlap);
+				p.container && document.body.removeChild(p.container);
+			}, 260);
 		};
 		p.drawItem = function() {
 			var num = p.getCountDays(p.initValue[0] + "/" + p.initValue[1] + "/1");
@@ -186,7 +203,7 @@
 			};
 			p3.innerHTML = dayList;
 			var dist = (num - 2) * p.params.itemHeight;
-			p.initValue[2] = (Math.abs(moveY[2]) > dist ? num : p.initValue[2]);
+			p.initValue[2] = Math.floor((Math.abs(moveY[2]) > dist ? num : p.initValue[2]));
 			moveY[2] = Math.abs(moveY[2]) > dist ? -dist : moveY[2];
 			setTransform(p3, "translate(0px," + moveY[2] + "px)");
 		};
@@ -230,14 +247,17 @@
 					for(var i = 0; i < overlay.length; i++) {
 						overlay[i].addEventListener("touchstart", p.touchstart);
 						overlay[i].setAttribute("data-index", i);
-						moveY.push(0);
 						overlay[i].parentNode.style.height = p.params.itemHeight * 3 + "px";
 					};
 					var years = p.params.minDate > parseInt(p.initValue[0]) ? 0 :
 						(parseInt(p.initValue[0]) - p.params.minDate - 1);
 					moveY[0] = -years * p.params.itemHeight;
-					moveY[1] = -(p.initValue[1] - 2) * p.params.itemHeight;
+					moveY[1] = -(parseInt(p.initValue[1]) - 2) * p.params.itemHeight;
 					moveY[2] = -(parseInt(p.initValue[2]) - 2) * p.params.itemHeight;
+					for(var i = 0; i < moveY.length; i++) {
+						p.defaultMove[i] = moveY[i];
+						p.defaultValue[i] = p.initValue[i];
+					};
 					setTransform(document.querySelector(".p1"), "translate(0px," + moveY[0] + "px)");
 					setTransform(document.querySelector(".p2"), "translate(0px," + moveY[1] + "px)");
 					setTransform(document.querySelector(".p3"), "translate(0px," + moveY[2] + "px)");
@@ -245,9 +265,9 @@
 			} else {
 				var data = p.params.data;
 				picker = '<div class="picker-selector"></div><div class="picker-wrapper">';
-				if(p.currentSelected.length != 0){
-					for(var i = 0; i < p.currentSelected.length; i++){
-						moveY[i] = p.currentSelected[i];
+				if(p.currentSelected.length != 0) {
+					for(var i = 0; i < p.currentSelected.length; i++) {
+						moveY[i] = p.defaultSelected[i];
 					}
 				};
 				picker += drawItem(data.item);
@@ -275,30 +295,34 @@
 						overlay[i].addEventListener("touchstart", p.touchstart);
 						overlay[i].setAttribute("data-index", i);
 						p.currentSelected[i] = moveY[i];
+						p.defaultSelected[i] = moveY[i];
 						itemName && (overlay[i].parentNode.previousElementSibling.innerHTML = itemName[i]);
 						overlay[i].parentNode.style.height = p.params.itemHeight * 3 + "px";
-						moveY[i] = (moveY[i] == 0) ? p.params.itemHeight : (1 - moveY[i]) * p.params.itemHeight;
+						moveY[i] = (moveY[i] == 0) ? p.params.itemHeight : 
+								(1 - moveY[i]) * p.params.itemHeight;
 						setTransform(overlay[i].previousElementSibling, "translate(0px," + moveY[i] + "px)");
 					};
 				};
 			};
+
 			function drawItem(data) {
 				var picker = '';
-				if(p.currentSelected.length == 0){
+				if(p.currentSelected.length == 0) {
 					moveY.push(0);
 				};
 				var itemList = '';
 				for(var i = 0; i < data.length; i++) {
 					itemList += '<div class="item" data-id="' + (data[i].id ? data[i].id : '');
 					itemList += '" data-val="' + data[i].name + '">' + data[i].name + '</div>';
-					(typeof data[i].selected !== 'undefined') ? (moveY[itemIndex] = i) : '';
+					(typeof data[i].selected !== 'undefined' && p.currentSelected.length == 0) ? 
+						(moveY[itemIndex] = i) : '';
 				};
 				picker += '<div class="picker-slide"><div class = "picker-title"></div>';
 				picker += '<div class="item-box"><div class="item-list"> ' + itemList + '</div>';
 				picker += '<div class="picker-overlay"></div>';
 				p.params.type == 1 ? picker += '<div class="picker-line"></div>' : '';
 				picker += '</div></div>';
-				var child = data[moveY[itemIndex]].child;
+				var child = data[moveY[itemIndex]] ? data[moveY[itemIndex]].child : '';
 				itemIndex++;
 				if(child && Array.isArray(child) && child.length > 0) {
 					picker += drawItem(child);
@@ -376,7 +400,7 @@
 					case 0:
 						p.initValue[0] = activeMoveY > 0 ? p.params.minDate :
 							p.params.minDate + Math.abs(activeMoveY) / p.params.itemHeight + 1;
-							p.drawItem();
+						p.drawItem();
 						break;
 					case 1:
 						p.initValue[1] = activeMoveY > 0 ? "1" :
@@ -399,7 +423,7 @@
 				var data = p.params.data.item;
 				for(var i = 0; i < p.slides.length; i++) {
 					var cs = data[p.currentSelected[i]];
-					(i > index) ? drawItem(data, p.currentSelected[i], i) : '';
+					(i > index) ? drawItem(data, p.currentSelected[i], i): '';
 					cs = data[p.currentSelected[i]];
 					data = cs ? (cs.child ? cs.child : []) : [];
 				};
@@ -410,6 +434,7 @@
 					child = child ? (child.child ? child.child[p.currentSelected[i + 1]] : '') : '';
 				}
 			};
+
 			function drawItem(data, index, id) {
 				var itemList = '';
 				for(var i = 0; i < data.length; i++) {

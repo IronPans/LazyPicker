@@ -174,11 +174,7 @@
 					"name": "广东",
 					"child": [{
 						"id": 101,
-						"name": "广州",
-						"child": [{
-							"id": 3,
-							"name": "天河区"
-						}]
+						"name": "广州"
 					}]
 				}, {
 					"id": 1,
@@ -186,7 +182,8 @@
 					"selected": true,
 					"child": [{
 						"id": 1,
-						"name": "昆明"
+						"name": "昆明",
+						
 					}, {
 						"id": 1,
 						"name": "玉溪",
@@ -278,7 +275,11 @@
 						}]
 					}, {
 						"id": 1,
-						"name": "鲫鱼"
+						"name": "鲫鱼",
+						"child": [{
+							"id":2,
+							"name": "好吃"
+						}]
 					}]
 				}],
 				"itemName": "大类-小类-描述"
@@ -306,7 +307,7 @@
 			var picker6 = new LazyPicker('.custom', {
 				data: data,
 				onChange: function(data) {
-					console.log(data);
+					console.log(JSON.stringify(data));
 				}
 			});
 			var picker7 = new LazyPicker('.custom2', {
