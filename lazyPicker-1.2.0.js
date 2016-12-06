@@ -2,7 +2,7 @@
  
  @Name : lazyPicker v1.2.0 移动日期控件
  @Author: TG
- @Date: 2016-12-05 
+ @Date: 2016-12-05
  @Site：https://github.com/IronPans/LazyPicker/blob/master/lazyPicker-1.2.0.js
  
  */
@@ -175,7 +175,7 @@
 			p.closeModal();
 		};
 		p.drawItem = function() {
-			var num = p.getCountDays(p.initValue[0] + "-" + p.initValue[1] + "-1");
+			var num = p.getCountDays(p.initValue[0] + "/" + p.initValue[1] + "/1");
 			var dayList = "";
 			var p3 = document.querySelector('.p3');
 			for(var i = 1; i < num + 1; i++) {
