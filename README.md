@@ -1,17 +1,14 @@
 # LazyPicker
 LazyPicker是一个简单的移动端时间选择器，支持多种主题。
 
-用手机扫描体验：  
-![](http://7s1r1c.com1.z0.glb.clouddn.com/t_1480730967.png)
-
 1.2.0版本体验：  
 ![](http://7s1r1c.com1.z0.glb.clouddn.com/t_1480918428.png)
 
 # 使用方法
 引入CSS和JavaScript脚本：
 ```
-<link rel="stylesheet" href="lazyPicker.min.css" />
-<script src="lazyPicker.min.js"></script>
+<link rel="stylesheet" href="lazyPicker-1.2.0.min.css" />
+<script src="lazyPicker-1.2.0.min.js"></script>
 ```
 
 # 简单的表单（input）
@@ -83,6 +80,8 @@ var data = {
   "itemName": "省-市-区"   /* 选项头说明提示 */
 };
 ```
+#注意：当自定义JSON时，格式一定要严格按照上面的格式。
+
 当是自定义格式时，`onChange`方法返回的值`data`也有所不同：
 ```
 [
@@ -92,8 +91,9 @@ var data = {
 多个数组表示每个选项的名称（`name`）和`id`，最后一项是用“-”连接的名称值字符串，也就是`input`的值。
 
 #BUG修复  
--修复了2月份天数不对的问题  
--修复了在苹果手机上选择年份或月份时，天数消失的问题
+- 修复了2月份天数不对的问题  
+- 修复了在苹果手机上选择年份或月份时，天数消失的问题
+- 修复了点击取消Bug
 
 如果你发现Bug或者有更好的建议，强烈恳求在本人[博客](http://ghmagical.com/article/page/id/dkOUFgGiPwcy)下方的评论区评论告知，你们的支持，才是LazyPicker改善之道。
 
