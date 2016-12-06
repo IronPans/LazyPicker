@@ -2,7 +2,7 @@
  
  @Name : lazyPicker v1.2.0 移动日期控件
  @Author: TG
- @Date: 2016-12-05
+ @Date: 2016-12-05 
  @Site：https://github.com/IronPans/LazyPicker/blob/master/lazyPicker-1.2.0.js
  
  */
@@ -376,6 +376,7 @@
 					case 0:
 						p.initValue[0] = activeMoveY > 0 ? p.params.minDate :
 							p.params.minDate + Math.abs(activeMoveY) / p.params.itemHeight + 1;
+							p.drawItem();
 						break;
 					case 1:
 						p.initValue[1] = activeMoveY > 0 ? "1" :
