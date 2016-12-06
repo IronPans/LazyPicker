@@ -93,6 +93,7 @@ var data = {
 
 #BUG修复  
 -修复了2月份天数不对的问题
+-修复了在苹果手机上选择年份或月份时，天数消失的问题
 
 如果你发现Bug或者有更好的建议，强烈恳求在本人[博客](http://ghmagical.com/article/page/id/dkOUFgGiPwcy)下方的评论区评论告知，你们的支持，才是LazyPicker改善之道。
 
